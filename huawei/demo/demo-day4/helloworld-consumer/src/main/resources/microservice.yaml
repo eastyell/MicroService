@@ -1,0 +1,28 @@
+APPLICATION_ID: Training21Days-HelloWorld
+service_description:
+  name: consumer
+  version: 0.0.2
+  environment: development
+cse:
+  service:
+    registry:
+      address: http://127.0.0.1:30100
+      instance:
+        watch: false
+  config:
+    client:
+      serverUri: http://127.0.0.1:30113
+      refreshMode: 1
+      refresh_interval: 5000
+  monitor:
+    client:
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      enabled: false 
+  rest:
+    address: 0.0.0.0:9090
+
+  credentials:
+    accessKey: V2FN6WKZGT2DYTFW1EMX
+    secretKey: fK12jOTtyfDkscQWYELbCOAnmWZ7GVDYscgQYLr2
+    project: cn-north-1
+    akskCustomCipher: default
