@@ -1,0 +1,41 @@
+APPLICATION_ID: Training21Days-HelloWorld  # 搴旂敤Id 鏄井鏈嶅姟鐨勪竴涓殧绂诲眰绾э紝榛樿鍙湁鍚屽簲鐢ㄤ笅鐨勫井鏈嶅姟鍙互鐩镐簰璋冪敤
+service_description:
+  name: provider            # 寰湇鍔″悕绉帮紝鍚屽簲鐢ㄤ笅鐨勪笉鍚屽井鏈嶅姟闇�瑕佹湁涓嶅悓鐨勫悕绉�
+  version: 0.0.1            # 寰湇鍔＄増鏈�
+cse:
+  service:
+    registry:
+      address: http://127.0.0.1:30100
+      instance:
+        watch: false        # 浣跨敤pull妯″紡杩炴帴鏈嶅姟涓績
+  config:
+    client:
+      serverUri: http://127.0.0.1:30113
+      refreshMode: 1        # 浣跨敤pull妯″紡杩炴帴閰嶇疆涓績
+      refresh_interval: 5000
+  monitor:                  # 鍙湁浠庢湰鍦版帴鍏ヤ簯涓奀SE鏃堕渶瑕侀厤缃甿onitor鍦板潃锛屼簯涓婇泦缇ら儴缃叉椂鍙互閫氳繃鏈嶅姟鍙戠幇鎺ュ叆monitor
+    client:
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      enabled: false 
+  rest:
+    address: 0.0.0.0:8080   # 鏈湇鍔＄洃鍚殑鍦板潃
+
+  # 澶勭悊閾鹃厤缃�
+  handler:
+    chain:
+      Provider:
+        default: demo-handler,qps-flowcontrol-provider,bizkeeper-provider
+
+  # 鏈湴杩炴帴鍗庝负浜戞椂闇�瑕侀厤缃瓵K/SK锛屽鏋滄槸鍦ㄤ簯涓奡erviceStage閮ㄧ讲鍒欎笉闇�瑕併�傜洿鎺ュ垹鎺塩redentials閰嶇疆鍗冲彲
+  credentials:
+    accessKey: V2FN6WKZGT2DYTFW1EMX   # 閰嶇疆浣犵殑AK
+    secretKey: fK12jOTtyfDkscQWYELbCOAnmWZ7GVDYscgQYLr2   # 閰嶇疆浣犵殑SK
+    project: cn-north-1  # 杩欓噷鐨勫�间笌sc/cc/monitor鐨勫湴鍧�鐩稿搴旓紝濡傛灉閰嶇疆鐨勬槸鍩熷悕锛孋SEJavaSDK鍙互鑷姩鎴彇鍑簆roject
+    akskCustomCipher: default
+
+  accesslog:
+    enabled: true
+    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
+
+hello:
+  sayHelloPrefix: "Hello "

@@ -1,0 +1,66 @@
+APPLICATION_ID: Training21Days-HelloWorld
+service_description:
+  name: edge
+  version: 0.0.1
+cse:
+  service:
+    registry:
+      address: http://127.0.0.1:30100
+      instance:
+        watch: false
+  config:
+    client:
+      serverUri: http://127.0.0.1:30113
+      refreshMode: 1
+      refresh_interval: 5000
+  monitor:
+    client:
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com:443
+      enabled: false 
+  rest:
+    address: 0.0.0.0:8000
+
+  handler:
+    chain:
+      Consumer:
+        service:
+          # 璇andler閾鹃厤缃彧鍦╡dge璋冪敤provider鏈嶅姟鏃剁敓鏁堬紝edge璋冪敤鍏朵粬鏈嶅姟鏃惰蛋鐨勮繕鏄粯璁ょ殑handler閾�
+          provider: demo-authentication-handler,qps-flowcontrol-consumer,loadbalance,fault-injection-consumer,bizkeeper-consumer
+
+  credentials:
+    accessKey: V2FN6WKZGT2DYTFW1EMX
+    secretKey: fK12jOTtyfDkscQWYELbCOAnmWZ7GVDYscgQYLr2
+    project: cn-north-1
+    akskCustomCipher: default
+
+  http:
+    dispatcher:
+      edge:
+        default:                 # 浣跨敤DefaultEdgeDispatcher寮�鍙戠綉鍏虫湇鍔�
+          enabled: true          # 寮�鍚疍efaultEdgeDispatcher
+          prefix: rest           # 鍖归厤璇锋眰璺緞鍓嶇紑涓�/rest
+          # withVersion榛樿鍊煎氨鏄痶rue锛岃繖閲屽彧鏄睍绀轰竴涓嬶紝瀹為檯涓婂彲浠ョ渷鐣ヨ閰嶇疆
+          withVersion: true      # 璇锋眰甯︾増鏈彿锛屼緥濡倂1琛ㄧず[1.0.0,2.0.0)鑼冨洿鍐呯殑寰湇鍔＄増鏈�
+          # prefixSegmentCount榛樿鍊煎氨鏄�1锛岃繖閲屽彧鏄睍绀轰竴涓嬶紝瀹為檯涓婂彲浠ョ渷鐣ヨ閰嶇疆
+          prefixSegmentCount: 1  # 鍓嶇紑闀垮害锛屼緥濡�/rest/provider/v0/hello/Bob锛屽幓鎺夌涓�娈碉紝灏�/provider/v0/hello/Bob杞彂鍒板悗绔�
+
+  #  http:
+  #    dispatcher:
+  #      edge:
+  #        url:                             # 浣跨敤URLMappedEdgeDispatcher寮�鍙戠綉鍏虫湇鍔�
+  #          enabled: true                  # 寮�鍚疷RLMappedEdgeDispatcher
+  #          mappings:
+  #            providerV0:                  # 瀹氫箟鍚嶄负providerV0鐨勬槧灏勮鍒�
+  #              prefixSegmentCount: 1      # 鍓嶇紑闀垮害涓�1锛屼緥濡傛帴鍒皍rl涓�/hello/provider/v0/hello/Bob鐨勮姹傦紝鎴幓绗竴娈靛彂缁檖rovider
+  #              path: "/hello/.*"          # 鏄犲皠瑙勫垯鍖归厤璇锋眰url鐨勬鍒欒〃杈惧紡
+  #              microserviceName: provider # 鏄犲皠瑙勫垯瀵瑰簲杞彂鐨勫悗绔井鏈嶅姟
+  #              versionRule: 0.0.0-1.0.0   # 鍖归厤鐨勫井鏈嶅姟鐗堟湰鑼冨洿锛屽ぇ浜庢垨绛変簬0.0.0锛屽皬浜�1.0.0
+  #            consumerV0:
+  #              prefixSegmentCount: 1
+  #              path: "/client/.*"
+  #              microserviceName: consumer
+  #              versionRule: 0.0.0-1.0.0
+
+  accesslog:
+    enabled: true
+    pattern: "%h - - %t cs-uri %s %B %D %SCB-traceId"
